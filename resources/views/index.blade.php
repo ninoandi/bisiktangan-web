@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Landing Page</title>
+  <link rel="icon" type="image/png" href="{{ asset('assets/img/logo bisik tangan.png') }}">
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -41,13 +42,9 @@
           <li><a href="#hero" class="active">Home<br></a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#team">Team</a></li>     
-          <li><a href="#contact">Contact</a></li>
         </ul>
       </nav>
-
-      <a class="btn-getstarted flex-md-shrink-0" href= "{{ route('login') }}"
-        >Login</a>
-
+      
     </div>
   </header>
 

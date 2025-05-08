@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Bisik Tangan</title>
+    <title>Kamus - Bisik Tangan</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/img/logo bisik tangan.png') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
@@ -101,6 +101,7 @@
     <div class="sidebar" :class="{ 'hidden': !sidebarOpen }">
         <div>
             <img src="{{ asset('assets/img/logo bisik tangan.png') }}" alt="Logo Bisik Tangan">
+            <a href="{{ route('dashboard') }}" class="nav-item">Dashboard</a>
             <a href="{{ route('kamus') }}" class="nav-item">Kamus</a>
             <a href="{{ route('history') }}" class="nav-item">History</a>
         </div>
@@ -113,7 +114,7 @@
                 <button @click="sidebarOpen = !sidebarOpen" class="toggle-btn">
                     ☰
                 </button>
-                <h2>{{ __('Dashboard') }}</h2>
+                <h2>{{ __('Kamus') }}</h2>
             </div>
             <form method="POST" action="{{ route('logout') }}">
                 @csrf

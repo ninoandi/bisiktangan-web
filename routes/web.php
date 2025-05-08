@@ -21,3 +21,6 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/buat-user', [UserController::class, 'createUser']);
+
+Route::get('/kamus', [App\Http\Controllers\KamusController::class, 'kamus'])->name('kamus');
+Route::get('/history', [App\Http\Controllers\HistoryController::class, 'history'])->name('history');
