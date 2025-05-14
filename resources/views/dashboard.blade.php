@@ -101,7 +101,16 @@
     <div class="sidebar" :class="{ 'hidden': !sidebarOpen }">
         <div>
             <img src="{{ asset('assets/img/logo bisik tangan.png') }}" alt="Logo Bisik Tangan">
-            <a href="{{ route('kamus') }}" class="nav-item">Kamus</a>
+            {{-- Kamus Dropdown --}}
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-item" onclick="toggleDropdown('kamusSubmenu')">Kamus ▾</a>
+            <div id="kamusSubmenu" style="display: none; margin-left: 15px;">
+                <a href="{{ route('kamus.alphabet') }}" class="nav-item">Alphabet</a>
+                <a href="{{ route('kamus.katatanya') }}" class="nav-item">Kata Tanya</a>
+                <a href="{{ route('kamus.katakerja') }}" class="nav-item">Kata Kerja</a>
+                <a href="{{ route('kamus.katasifat') }}" class="nav-item">Kata Sifat</a>
+            </div>
+        </div>
             <a href="{{ route('history') }}" class="nav-item">History</a>
         </div>
     </div>
@@ -125,5 +134,17 @@
             <p>{{ __("Selamat Datang, ") }}{{ Auth::user()->name }}!</p>
         </div>
     </div>
+
+    <script>
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        if (dropdown.style.display === "none" || dropdown.style.display === "") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    }
+</script>
+
 </body>
 </html>

@@ -102,7 +102,16 @@
         <div>
             <img src="{{ asset('assets/img/logo bisik tangan.png') }}" alt="Logo Bisik Tangan">
             <a href="{{ route('dashboard') }}" class="nav-item">Dashboard</a>
-           <a href="{{ route('kamus') }}" class="nav-item">Kamus</a>
+           {{-- Kamus Dropdown --}}
+        <div class="nav-item dropdown">
+            <a href="#" class="nav-item" onclick="toggleDropdown('kamusSubmenu')">Kamus ▾</a>
+            <div id="kamusSubmenu" style="display: none; margin-left: 15px;">
+                <a href="{{ route('kamus.alphabet') }}" class="nav-item">Alphabet</a>
+                <a href="{{ route('kamus.katatanya') }}" class="nav-item">Kata Tanya</a>
+                <a href="{{ route('kamus.katakerja') }}" class="nav-item">Kata Kerja</a>
+                <a href="{{ route('kamus.katasifat') }}" class="nav-item">Kata Sifat</a>
+            </div>
+        </div>
            <a href="{{ route('history') }}" class="nav-item">History</a>
         </div>
     </div>
@@ -121,10 +130,33 @@
                 <button type="submit" class="logout-btn">Log out</button>
             </form>
         </div>
-
         <div class="card">
-            <p>{{ __("Selamat Datang, ") }}{{ Auth::user()->name }}!</p>
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead style="background-color: #f0f0f0;">
+                    <tr>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Deskripsi</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Video</th>
+                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Diisi backend -->
+                </tbody>
+            </table>
         </div>
     </div>
+
+ <script>
+    function toggleDropdown(id) {
+        const dropdown = document.getElementById(id);
+        if (dropdown.style.display === "none" || dropdown.style.display === "") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    }
+</script>
+
 </body>
 </html>
