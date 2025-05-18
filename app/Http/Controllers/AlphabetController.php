@@ -25,6 +25,7 @@ class AlphabetController extends Controller
     $request->validate([    
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
+        'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         'video_url' => 'required|mimes:mp4,mkv,avi|max:20480', // Maksimum ukuran 20MB
     ]);
 
@@ -33,11 +34,17 @@ class AlphabetController extends Controller
         $videoPath = $request->file('video_url')->store('videos', 'public'); // menyimpan di folder 'public/videos'
     }
 
+    // Simpan gambar
+    if ($request->hasFile('gambar')) {
+        $fotoPath = $request->file('gambar')->store('foto_alphabet', 'public');
+    }
+
     // Menyimpan data ke database
     $alphabet = new Alphabet();
     $alphabet->judul = $request->judul;
     $alphabet->deskripsi = $request->deskripsi;
     $alphabet->video_url = $videoPath; // Menyimpan path video
+    $alphabet->gambar = $fotoPath ?? null;
     $alphabet->save();
 
     return redirect()->route('kamus.alphabet')->with('success', 'Data berhasil disimpan!'); // Arahkan ke halaman lain atau tampilkan pesan sukses
@@ -50,6 +57,7 @@ public function update(Request $request, $id)
     $request->validate([
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
         'video_url' => 'nullable|mimes:mp4,mkv,avi|max:20480',
     ]);
 
@@ -60,6 +68,14 @@ public function update(Request $request, $id)
     if ($request->hasFile('video_url')) {
         $videoPath = $request->file('video_url')->store('videos', 'public');
         $alphabet->video_url = $videoPath;
+    }
+
+    if ($request->hasFile('gambar')) {
+        // Hapus foto lama
+        if ($alphabet->gambar && Storage::disk('public')->exists($alphabet->gambar)) {
+            Storage::disk('public')->delete($alphabet->gambar);
+        }
+        $alphabet->gambar = $request->file('gambar')->store('foto_alphabet', 'public');
     }
 
     $alphabet->save();
@@ -74,6 +90,10 @@ public function destroy($id)
     // Jika ingin hapus video dari storage juga:
     if ($alphabet->video_url && Storage::disk('public')->exists($alphabet->video_url)) {
         Storage::disk('public')->delete($alphabet->video_url);
+    }
+    // Hapus foto dari storage
+    if ($alphabet->gambar && Storage::disk('public')->exists($alphabet->gambar)) {
+        Storage::disk('public')->delete($alphabet->gambar);
     }
 
     $alphabet->delete();

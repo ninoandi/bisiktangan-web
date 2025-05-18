@@ -1,138 +1,10 @@
-<!DOCTYPE html>
-<html lang="id" x-data="{ sidebarOpen: true }" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alphabet - Bisik Tangan</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo bisik tangan.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+@extends('layouts.master')
 
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <style>
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+@section('title', 'Alphabet')
 
-        body {
-            background-color: #f5f7f8;
-            display: flex;
-            min-height: 100vh;
-        }
+@section('header', 'Alphabet')
 
-        .sidebar {
-            width: 220px;
-            background-color: #0a1a4f;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease-in-out;
-        }
-
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
-
-        .sidebar img {
-            max-width: 150px;
-            margin-bottom: 40px;
-        }
-
-        .nav-item {
-            margin-bottom: 20px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            display: block;
-        }
-
-        .nav-item:hover {
-            text-decoration: underline;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            width: 100%;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .header h2 {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .logout-btn {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .toggle-btn {
-            background: #0a1a4f;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="sidebar" :class="{ 'hidden': !sidebarOpen }">
-        <div>
-            <img src="{{ asset('assets/img/logo bisik tangan.png') }}" alt="Logo Bisik Tangan">
-             <a href="{{ route('dashboard') }}" class="nav-item">Dashboard</a>
-            {{-- Kamus Dropdown --}}
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-item" onclick="toggleDropdown('kamusSubmenu')">Kamus ▾</a>
-            <div id="kamusSubmenu" style="display: none; margin-left: 15px;">
-                <a href="{{ route('kamus.alphabet') }}" class="nav-item">Alphabet</a>
-                <a href="{{ route('kamus.katatanya') }}" class="nav-item">Kata Tanya</a>
-                <a href="{{ route('kamus.katakerja') }}" class="nav-item">Kata Kerja</a>
-                <a href="{{ route('kamus.katasifat') }}" class="nav-item">Kata Sifat</a>
-            </div>
-        </div>
-            <a href="{{ route('history') }}" class="nav-item">History</a>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="header">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <button @click="sidebarOpen = !sidebarOpen" class="toggle-btn">
-                    ☰
-                </button>
-                <h2>{{ __('Alphabet') }}</h2>
-            </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">Log out</button>
-            </form>
-        </div>
-
+@section('content')
         <div class="card">
             <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
     <table style="width: 100%; border-collapse: collapse;">
@@ -141,6 +13,7 @@
                 <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>
                 <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Judul</th>
                 <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Deskripsi</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Foto</th>
                 <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Video</th>
                 <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Action</th>
             </tr>
@@ -173,6 +46,11 @@
                                                 required>
                                         </div>
 
+                                        <div class="mb-3">
+                                            <label class="form-label">Foto</label>
+                                            <input type="file" class="form-control" name="gambar" accept="image/*" required>
+                                    </div>
+
                                     <div class="mb-3">
                                             <label class="form-label">Video</label>
                                             <input type="file" class="form-control" name="video_url" accept="video/*" required>
@@ -197,10 +75,33 @@
             <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->judul }}</td>
             <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->deskripsi }}</td>
             <td>
+                <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#fotoModal{{ $item->id }}">
+                    Lihat Foto
+                </button>
+                <!-- Modal Lihat Foto -->
+<div class="modal fade" id="fotoModal{{ $item->id }}" tabindex="-1" aria-labelledby="fotoModalLabel{{ $item->id }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="fotoModalLabel{{ $item->id }}">Foto - {{ $item->judul }}</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+        </div>
+        <div class="modal-body text-center">
+          @if($item->gambar)
+              <img src="{{ asset('storage/' . $item->gambar) }}" alt="Foto {{ $item->judul }}" class="img-fluid rounded">
+          @else
+              <p>Foto tidak tersedia.</p>
+          @endif
+        </div>
+      </div>
+    </div>
+  </div>
+  
+            </td>
+            <td>
                 <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal{{ $item->id }}">
                     Lihat Video
                 </button>
-            
                 <!-- Modal -->
                 <div class="modal fade" id="videoModal{{ $item->id }}" tabindex="-1" aria-labelledby="videoModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
@@ -247,6 +148,12 @@
                     <div class="mb-3">
                         <label class="form-label">Deskripsi</label>
                         <input type="text" class="form-control" name="deskripsi" value="{{ $item->deskripsi }}" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Ganti Foto (opsional)</label>
+                        <input type="file" class="form-control" name="gambar" accept="image/*">
+                        <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar.</small>
                     </div>
 
                     <div class="mb-3">
@@ -317,8 +224,4 @@
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-
-</body>
-</html>
-
+@endsection
