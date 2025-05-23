@@ -12,14 +12,24 @@ class HistoryController extends Controller
     return view('history'); 
 }
 
-public function index()
-    {
-        // Ambil semua data history dari database
-        $history = HistoryUser::all();
+public function index(Request $request)
+{
+    $sort = $request->query('sort');
 
-        // Kirim data ke view 'history' (sesuaikan nama view-mu)
-        return view('history', compact('history'));
+    $query = HistoryUser::query();
+
+    if ($sort === 'alphabet') {
+        $query->orderBy('deskripsi', 'asc'); 
+    } elseif ($sort === 'newest') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'oldest') {
+        $query->orderBy('created_at', 'asc');
     }
+
+    $history = $query->get();
+
+    return view('history', compact('history', 'sort'));
+}
 
     public function destroy($id)
 {

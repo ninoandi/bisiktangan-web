@@ -224,7 +224,7 @@
                 <i class="fas fa-history"></i> History
             </a>
             <a href="{{ route('informasi') }}" class="nav-item">
-                <i class="fas fa-informasi"></i> Informasi
+                <i class="fas fa-info-circle"></i></i> Informasi
             </a>
         </div>
     </div>

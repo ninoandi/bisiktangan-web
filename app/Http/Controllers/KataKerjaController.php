@@ -9,10 +9,23 @@ use Illuminate\Support\Facades\Storage;
 class KataKerjaController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
 {
-    $katakerja = KataKerja::all(); // Ambil semua data katakerja
-    return view('kamus.katakerja', compact('katakerja')); // Kirim data ke view
+    $sort = $request->query('sort');
+
+    $query = KataKerja::query();
+
+    if ($sort === 'alphabet') {
+        $query->orderBy('judul', 'asc'); 
+    } elseif ($sort === 'newest') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'oldest') {
+        $query->orderBy('created_at', 'asc');
+    }
+
+    $katakerja = $query->get();
+
+    return view('kamus.katakerja', compact('katakerja', 'sort'));
 }
 
     public function store(Request $request)
@@ -82,5 +95,16 @@ public function destroy($id)
     $katakerja->delete();
 
     return redirect()->route('kamus.katakerja')->with('success', 'Data berhasil dihapus!');
+}
+
+public function apiIndex()
+{
+    $katakerja = KataKerja::all()->map(function ($item) {
+        $item->gambar = $item->gambar ? asset('storage/' . $item->gambar) : null;
+        $item->video_url = $item->video_url ? asset('storage/' . $item->video_url) : null;
+        return $item;
+    });
+
+    return response()->json($katakerja);
 }
 }

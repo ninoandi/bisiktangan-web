@@ -33,8 +33,19 @@
 @endif
 
 <div class="card">
-    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
-<table style="width: 100%; border-collapse: collapse;">
+    <button type="button" class="btn btn-primary mb-3" style="width: 150px;" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
+
+    <form method="GET" action="{{ route('kamus.katatanya') }}" class="mb-3">
+        <label for="sort" class="form-label">Urutkan berdasarkan:</label>
+        <select name="sort" id="sort" class="form-select w-auto d-inline-block" onchange="this.form.submit()">
+            <option value="" {{ $sort == '' ? 'selected' : '' }}>Default</option>
+            <option value="alphabet" {{ $sort == 'alphabet' ? 'selected' : '' }}>Alphabet (A-Z)</option>
+            <option value="newest" {{ $sort == 'newest' ? 'selected' : '' }}>Waktu: Terbaru</option>
+            <option value="oldest" {{ $sort == 'oldest' ? 'selected' : '' }}>Waktu: Terlama</option>
+        </select>
+    </form>
+
+    <table style="width: 100%; border-collapse: collapse;">
 <thead style="background-color: #f0f0f0;">
     <tr>
         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>

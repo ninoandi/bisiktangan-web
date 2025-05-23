@@ -12,11 +12,25 @@ use Illuminate\Support\Facades\Storage;
 class AlphabetController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
 {
-    $alphabet = Alphabet::all(); // Ambil semua data alphabet
-    return view('kamus.alphabet', compact('alphabet')); // Kirim data ke view
+    $sort = $request->query('sort');
+
+    $query = Alphabet::query();
+
+    if ($sort === 'alphabet') {
+        $query->orderBy('judul', 'asc'); 
+    } elseif ($sort === 'newest') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'oldest') {
+        $query->orderBy('created_at', 'asc');
+    }
+
+    $alphabet = $query->get();
+
+    return view('kamus.alphabet', compact('alphabet', 'sort'));
 }
+
 
     
 public function store(Request $request)
@@ -98,6 +112,17 @@ public function destroy($id)
     $alphabet->delete();
 
     return redirect()->route('kamus.alphabet')->with('success', 'Data berhasil dihapus!');
+}
+
+public function apiIndex()
+{
+    $alphabet = Alphabet::all()->map(function ($item) {
+        $item->gambar = $item->gambar ? asset('storage/' . $item->gambar) : null;
+        $item->video_url = $item->video_url ? asset('storage/' . $item->video_url) : null;
+        return $item;
+    });
+
+    return response()->json($alphabet);
 }
 
 }

@@ -8,11 +8,24 @@ use Illuminate\Support\Facades\Storage;
 
 class KataTanyaController extends Controller
 {
-    public function index()
-    {
-        $katatanya = KataTanya::all(); // Ambil semua data katatanya
-        return view('kamus.katatanya', compact('katatanya')); // Kirim data ke view
+    public function index(Request $request)
+{
+    $sort = $request->query('sort');
+
+    $query = KataTanya::query();
+
+    if ($sort === 'alphabet') {
+        $query->orderBy('judul', 'asc'); 
+    } elseif ($sort === 'newest') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'oldest') {
+        $query->orderBy('created_at', 'asc');
     }
+
+    $katatanya = $query->get();
+
+    return view('kamus.katatanya', compact('katatanya', 'sort'));
+}
     
     public function store(Request $request)
 {
@@ -76,5 +89,16 @@ public function destroy($id)
     $katatanya->delete();
 
     return redirect()->route('kamus.katatanya')->with('success', 'Data berhasil dihapus!');
+}
+
+public function apiIndex()
+{
+    $katatanya = KataTanya::all()->map(function ($item) {
+        $item->gambar = $item->gambar ? asset('storage/' . $item->gambar) : null;
+        $item->video_url = $item->video_url ? asset('storage/' . $item->video_url) : null;
+        return $item;
+    });
+
+    return response()->json($katatanya);
 }
 }

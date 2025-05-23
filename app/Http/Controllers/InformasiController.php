@@ -8,11 +8,24 @@ use App\Models\Informasi;
 
 class InformasiController extends Controller
 {
-    public function index()
-    {
-        $informasi = Informasi::all();
-        return view('informasi', compact('informasi'));
+    public function index(Request $request)
+{
+    $sort = $request->query('sort');
+
+    $query = Informasi::query();
+
+    if ($sort === 'alphabet') {
+        $query->orderBy('judul', 'asc'); 
+    } elseif ($sort === 'newest') {
+        $query->orderBy('created_at', 'desc');
+    } elseif ($sort === 'oldest') {
+        $query->orderBy('created_at', 'asc');
     }
+
+    $informasi = $query->get();
+
+    return view('informasi', compact('informasi', 'sort'));
+}
 
     public function store(Request $request)
     {
@@ -96,4 +109,14 @@ class InformasiController extends Controller
 
         return redirect()->route('informasi')->with('success', 'Informasi berhasil dihapus!');
     }
+
+    public function apiIndex()
+{
+    $informasi = Informasi::all()->map(function ($item) {
+        $item->gambar = $item->gambar ? asset('storage/' . $item->gambar) : null;
+        return $item;
+    });
+
+    return response()->json($informasi);
+}
 }
