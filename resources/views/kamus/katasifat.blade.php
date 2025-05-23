@@ -5,6 +5,33 @@
 @section('header', 'Kata Sifat')
 
 @section('content')
+ <!-- Alert Dialog -->
+ @if (session('success'))
+ <div class="alert alert-success alert-dismissible fade show" role="alert">
+     {{ session('success') }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+@endif
+
+@if ($errors->any())
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+ <ul class="mb-0">
+     @foreach ($errors->all() as $error)
+         <li>{{ $error }}</li>
+     @endforeach
+ </ul>
+ <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+@endif
+
+@if (session('error'))
+ <div class="alert alert-danger alert-dismissible fade show" role="alert">
+     {{ session('error') }}
+     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+ </div>
+@endif
+
+<!-- Main Content -->
 <div class="card">
     <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#modalTambah">Tambah Data</button>
 <table style="width: 100%; border-collapse: collapse;">
@@ -13,6 +40,7 @@
         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>
         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Judul</th>
         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Deskripsi</th>
+        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Foto</th>
         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Video</th>
         <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Action</th>
     </tr>
@@ -45,6 +73,11 @@ tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                            required>
                    </div>
 
+                   <div class="mb-3">
+                    <label class="form-label">Foto</label>
+                    <input type="file" class="form-control" name="gambar" accept="image/*" required>
+            </div>
+
                <div class="mb-3">
                        <label class="form-label">Video</label>
                        <input type="file" class="form-control" name="video_url" accept="video/*" required>
@@ -68,6 +101,31 @@ tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $index + 1 }}</td>
 <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->judul }}</td>
 <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->deskripsi }}</td>
+<td>
+    <button class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#fotoModal{{ $item->id }}">
+        Lihat Foto
+    </button>
+    <!-- Modal Lihat Foto -->
+<div class="modal fade" id="fotoModal{{ $item->id }}" tabindex="-1" aria-labelledby="fotoModalLabel{{ $item->id }}" aria-hidden="true">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+<h5 class="modal-title" id="fotoModalLabel{{ $item->id }}">Foto - {{ $item->judul }}</h5>
+<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
+</div>
+<div class="modal-body text-center">
+@if($item->gambar)
+  <img src="{{ asset('storage/' . $item->gambar) }}" alt="Foto {{ $item->judul }}" class="img-fluid rounded">
+@else
+  <p>Foto tidak tersedia.</p>
+@endif
+</div>
+</div>
+</div>
+</div>
+
+</td>
+
 <td>
 <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#videoModal{{ $item->id }}">
 Lihat Video
@@ -119,6 +177,12 @@ Edit
 <div class="mb-3">
    <label class="form-label">Deskripsi</label>
    <input type="text" class="form-control" name="deskripsi" value="{{ $item->deskripsi }}" required>
+</div>
+
+<div class="mb-3">
+    <label class="form-label">Ganti Foto (opsional)</label>
+    <input type="file" class="form-control" name="gambar" accept="image/*">
+    <small class="text-muted">Kosongkan jika tidak ingin mengubah gambar.</small>
 </div>
 
 <div class="mb-3">

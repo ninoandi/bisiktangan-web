@@ -19,35 +19,34 @@ class AlphabetController extends Controller
 }
 
     
-    public function store(Request $request)
+public function store(Request $request)
 {
-    // Validasi file video
-    $request->validate([    
+    $request->validate([
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
-        'gambar' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         'video_url' => 'required|mimes:mp4,mkv,avi|max:20480', // Maksimum ukuran 20MB
     ]);
 
-    // Menyimpan video
-    if ($request->hasFile('video_url')) {
-        $videoPath = $request->file('video_url')->store('videos', 'public'); // menyimpan di folder 'public/videos'
+    $gambarPath = null;
+    if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
+        $gambarPath = $request->file('gambar')->store('alphabet_gambar', 'public');
     }
 
-    // Simpan gambar
-    if ($request->hasFile('gambar')) {
-        $fotoPath = $request->file('gambar')->store('foto_alphabet', 'public');
+    $videoPath = null;
+    if ($request->hasFile('video_url') && $request->file('video_url')->isValid()) {
+    $videoPath = $request->file('video_url')->store('videos', 'public');
     }
 
-    // Menyimpan data ke database
+
     $alphabet = new Alphabet();
     $alphabet->judul = $request->judul;
+    $alphabet->gambar = $gambarPath;
     $alphabet->deskripsi = $request->deskripsi;
-    $alphabet->video_url = $videoPath; // Menyimpan path video
-    $alphabet->gambar = $fotoPath ?? null;
+    $alphabet->video_url = $videoPath;
     $alphabet->save();
 
-    return redirect()->route('kamus.alphabet')->with('success', 'Data berhasil disimpan!'); // Arahkan ke halaman lain atau tampilkan pesan sukses
+    return redirect()->route('kamus.alphabet')->with('success', 'Alphabet berhasil disimpan!');
 }
 
 public function update(Request $request, $id)
@@ -57,7 +56,7 @@ public function update(Request $request, $id)
     $request->validate([
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
-        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         'video_url' => 'nullable|mimes:mp4,mkv,avi|max:20480',
     ]);
 

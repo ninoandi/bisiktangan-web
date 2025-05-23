@@ -10,5 +10,5 @@ class KataKerja extends Model
     use HasFactory;
 
     protected $table = 'katakerja';
-    protected $fillable = ['judul', 'deskripsi', 'video_url'];
+    protected $fillable = ['judul', 'deskripsi', 'video_url', 'gambar'];
 }

@@ -10,5 +10,5 @@ class KataTanya extends Model
     use HasFactory;
 
     protected $table = 'katatanya';
-    protected $fillable = ['judul', 'deskripsi', 'video_url'];
+    protected $fillable = ['judul', 'deskripsi', 'video_url', 'gambar'];
 }

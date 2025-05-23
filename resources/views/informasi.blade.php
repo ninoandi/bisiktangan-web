@@ -1,8 +1,8 @@
 @extends('layouts.master')
 
-@section('title', 'Alphabet')
+@section('title', 'Informasi')
 
-@section('header', 'Alphabet')
+@section('header', 'Informasi')
 
 @section('content')
 
@@ -13,17 +13,6 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
-
-    @if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <ul class="mb-0">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
 
     @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -41,9 +30,9 @@
                 <tr>
                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>
                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Judul</th>
-                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Deskripsi</th>
-                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Foto</th>
-                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Video</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Caption</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Gambar</th>
+                    <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Detail Informasi</th>
                     <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Action</th>
                 </tr>
                 <!-- Awal Modal Tambah -->
@@ -52,12 +41,12 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Data Alphabet</h1>
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">Form Data Informasi</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                             </div>
 
-                            <form method="POST" action="{{ route('alphabet.store') }}" enctype="multipart/form-data">
+                            <form method="POST" action="{{ route('informasi.store') }}" enctype="multipart/form-data">
                                 @csrf
                                 <div class="modal-body">
 
@@ -69,25 +58,25 @@
 
 
                                     <div class="mb-3">
-                                        <label class="form-label">Deskripsi Video</label>
-                                        <input type="text" class="form-control" name="deskripsi"
-                                            placeholder="Masukkan Deskripsi Video!" required>
+                                        <label class="form-label">Caption</label>
+                                        <input type="text" class="form-control" name="caption"
+                                            placeholder="Masukkan Caption Berita!" required>
                                     </div>
 
                                     <div class="mb-3">
                                         <label class="form-label">Foto</label>
-                                        <input type="file" class="form-control" name="gambar" accept="image/*">
+                                        <input type="file" class="form-control" name="gambar" accept="image/*" >
                                     </div>
 
                                     <div class="mb-3">
-                                        <label class="form-label">Video</label>
-                                        <input type="file" class="form-control" name="video_url" accept="video/*"
-                                            required>
+                                        <label class="form-label">Detail Informasi</label>
+                                        <input type="text" class="form-control" name="detail_informasi"
+                                            placeholder="Masukkan Informasi!" required>
                                     </div>
 
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary"
-                                            name="bsimpanalphabet">Simpan</button>
+                                            name="bsimpaninformasi">Simpan</button>
                                         <button type="button" class="btn btn-danger"
                                             data-bs-dismiss="modal">Keluar</button>
                                     </div>
@@ -98,11 +87,11 @@
                 <!-- Akhir Modal Tambah -->
             </thead>
             <tbody>
-                @forelse ($alphabet as $index => $item)
+                @forelse ($informasi as $index => $item)
                     <tr>
                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $index + 1 }}</td>
                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->judul }}</td>
-                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->deskripsi }}</td>
+                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->caption }}</td>
                         <td>
                             <button class="btn btn-sm btn-info" data-bs-toggle="modal"
                                 data-bs-target="#fotoModal{{ $item->id }}">
@@ -132,32 +121,8 @@
                             </div>
 
                         </td>
-                        <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal"
-                                data-bs-target="#videoModal{{ $item->id }}">
-                                Lihat Video
-                            </button>
-                            <!-- Modal -->
-                            <div class="modal fade" id="videoModal{{ $item->id }}" tabindex="-1"
-                                aria-labelledby="videoModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Video Alphabet</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body text-center">
-                                            <video width="50%" controls>
-                                                <source src="{{ asset('storage/' . $item->video_url) }}"
-                                                    type="video/mp4">
-                                                Browser tidak mendukung video.
-                                            </video>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
+                        <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ $item->detail_informasi }}</td>
+                        
 
                         <td style="padding: 12px; border-bottom: 1px solid #ddd;">
                             <!-- Tombol Edit -->
@@ -171,12 +136,12 @@
                                 aria-labelledby="editModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
-                                        <form action="{{ route('alphabet.update', $item->id) }}" method="POST"
+                                        <form action="{{ route('informasi.update', $item->id) }}" method="POST"
                                             enctype="multipart/form-data">
                                             @csrf
                                             @method('PUT')
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="editModalLabel">Edit Data Alphabet</h5>
+                                                <h5 class="modal-title" id="editModalLabel">Edit Data Informasi</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                     aria-label="Close"></button>
                                             </div>
@@ -242,7 +207,7 @@
                                             Apakah kamu yakin ingin menghapus <strong>{{ $item->judul }}</strong>?
                                         </div>
                                         <div class="modal-footer">
-                                            <form action="{{ route('alphabet.destroy', $item->id) }}" method="POST">
+                                            <form action="{{ route('informasi.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger">Ya, Hapus</button>

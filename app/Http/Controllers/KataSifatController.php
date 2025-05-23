@@ -20,6 +20,7 @@ class KataSifatController extends Controller
     $request->validate([    
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         'video_url' => 'required|mimes:mp4,mkv,avi|max:20480', // Maksimum ukuran 20MB
     ]);
 
@@ -45,6 +46,7 @@ public function update(Request $request, $id)
     $request->validate([
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         'video_url' => 'nullable|mimes:mp4,mkv,avi|max:20480',
     ]);
 

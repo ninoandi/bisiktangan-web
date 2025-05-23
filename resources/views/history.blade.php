@@ -1,162 +1,59 @@
-<!DOCTYPE html>
-<html lang="id" x-data="{ sidebarOpen: true }" xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>History - Bisik Tangan</title>
-    <link rel="icon" type="image/png" href="{{ asset('assets/img/logo bisik tangan.png') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-    <style>
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-        }
+@extends('layouts.master')
 
-        body {
-            background-color: #f5f7f8;
-            display: flex;
-            min-height: 100vh;
-        }
+@section('title', 'History - Bisik Tangan')
 
-        .sidebar {
-            width: 220px;
-            background-color: #0a1a4f;
-            color: white;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.3s ease-in-out;
-        }
+@section('header', 'History')
 
-        .sidebar.hidden {
-            transform: translateX(-100%);
-        }
+@section('content')
+<div class="card">
+    <table style="width: 100%; border-collapse: collapse;">
+        <thead style="background-color: #f0f0f0;">
+            <tr>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Deskripsi</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Video</th>
+                <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($history as $index => $item)
+            <tr>
+                <td style="padding: 12px;">{{ $index + 1 }}</td>
+                <td style="padding: 12px;">{{ $item->deskripsi }}</td>
+                <td style="padding: 12px;">
+                    <video width="150" controls>
+                        <source src="{{ asset('storage/' . $item->video_url) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </td>
+                <td style="padding: 12px;">
+                    <form action="{{ route('history.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+        @empty
+            <tr>
+                <td colspan="4" style="padding: 12px; text-align: center;">Tidak ada data.</td>
+            </tr>
+        @endforelse
+        
+        </tbody>
+        
+    </table>
+</div>
+</div>
 
-        .sidebar img {
-            max-width: 150px;
-            margin-bottom: 40px;
-        }
-
-        .nav-item {
-            margin-bottom: 20px;
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            display: block;
-        }
-
-        .nav-item:hover {
-            text-decoration: underline;
-        }
-
-        .main-content {
-            flex: 1;
-            padding: 40px;
-            width: 100%;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 40px;
-        }
-
-        .header h2 {
-            font-size: 24px;
-            color: #333;
-        }
-
-        .logout-btn {
-            background: #e53e3e;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        .toggle-btn {
-            background: #0a1a4f;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-            cursor: pointer;
-        }
-
-        .card {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-    </style>
-</head>
-<body>
-    <!-- Sidebar -->
-    <div class="sidebar" :class="{ 'hidden': !sidebarOpen }">
-        <div>
-            <img src="{{ asset('assets/img/logo bisik tangan.png') }}" alt="Logo Bisik Tangan">
-            <a href="{{ route('dashboard') }}" class="nav-item">Dashboard</a>
-           {{-- Kamus Dropdown --}}
-        <div class="nav-item dropdown">
-            <a href="#" class="nav-item" onclick="toggleDropdown('kamusSubmenu')">Kamus ▾</a>
-            <div id="kamusSubmenu" style="display: none; margin-left: 15px;">
-                <a href="{{ route('kamus.alphabet') }}" class="nav-item">Alphabet</a>
-                <a href="{{ route('kamus.katatanya') }}" class="nav-item">Kata Tanya</a>
-                <a href="{{ route('kamus.katakerja') }}" class="nav-item">Kata Kerja</a>
-                <a href="{{ route('kamus.katasifat') }}" class="nav-item">Kata Sifat</a>
-            </div>
-        </div>
-           <a href="{{ route('history') }}" class="nav-item">History</a>
-        </div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="main-content">
-        <div class="header">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <button @click="sidebarOpen = !sidebarOpen" class="toggle-btn">
-                    ☰
-                </button>
-                <h2>{{ __('History') }}</h2>
-            </div>
-            <form method="POST" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="logout-btn">Log out</button>
-            </form>
-        </div>
-        <div class="card">
-            <table style="width: 100%; border-collapse: collapse;">
-                <thead style="background-color: #f0f0f0;">
-                    <tr>
-                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">No</th>
-                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Deskripsi</th>
-                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Video</th>
-                        <th style="padding: 12px; text-align: left; border-bottom: 1px solid #ddd;">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Diisi backend -->
-                </tbody>
-            </table>
-        </div>
-    </div>
-
- <script>
-    function toggleDropdown(id) {
-        const dropdown = document.getElementById(id);
-        if (dropdown.style.display === "none" || dropdown.style.display === "") {
-            dropdown.style.display = "block";
-        } else {
-            dropdown.style.display = "none";
-        }
-    }
+<script>
+function toggleDropdown(id) {
+const dropdown = document.getElementById(id);
+if (dropdown.style.display === "none" || dropdown.style.display === "") {
+    dropdown.style.display = "block";
+} else {
+    dropdown.style.display = "none";
+}
+}
 </script>
-
-</body>
-</html>
+@endsection

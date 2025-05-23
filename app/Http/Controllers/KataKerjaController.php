@@ -21,9 +21,15 @@ class KataKerjaController extends Controller
     $request->validate([    
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         'video_url' => 'required|mimes:mp4,mkv,avi|max:20480', // Maksimum ukuran 20MB
     ]);
 
+    
+    $gambarPath = null;
+    if ($request->hasFile('gambar')) {
+    $gambarPath = $request->file('gambar')->store('foto_alphabet', 'public');
+}
     // Menyimpan video
     if ($request->hasFile('video_url')) {
         $videoPath = $request->file('video_url')->store('videos', 'public'); // menyimpan di folder 'public/videos'
@@ -46,6 +52,7 @@ public function update(Request $request, $id)
     $request->validate([
         'judul' => 'required|string',
         'deskripsi' => 'required|string',
+        'gambar' => 'nullable|image|mimes:jpeg,png,jpg|max:5120',
         'video_url' => 'nullable|mimes:mp4,mkv,avi|max:20480',
     ]);
 

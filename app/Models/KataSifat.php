@@ -10,5 +10,5 @@ class KataSifat extends Model
     use HasFactory;
 
     protected $table = 'katasifat';
-    protected $fillable = ['judul', 'deskripsi', 'video_url'];
+    protected $fillable = ['judul', 'deskripsi', 'video_url', 'gambar'];
 }

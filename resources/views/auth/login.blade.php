@@ -154,7 +154,7 @@
         <!-- Right Login Area -->
         <div class="right">
             <a href="{{ url('/') }}" style="display: inline-block; margin-bottom: 20px; color: #0077FF; text-decoration: none; font-weight: bold;">
-             ← Kembali ke Dashboard
+             ← Kembali 
             </a>
 
             <h2>Login</h2>

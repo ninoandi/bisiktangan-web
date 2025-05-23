@@ -9,16 +9,17 @@ use App\Http\Controllers\KataKerjaController;
 use App\Http\Controllers\KataSifatController;
 use App\Http\Controllers\KataTanyaController;
 use App\Http\Controllers\DashboardController; 
-
+use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\InformasiController;
+use App\Models\Informasi;
 
 Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth']);
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
 
 
 Route::middleware('auth')->group(function () {
@@ -97,4 +98,17 @@ Route::prefix('kamus')->group(function () {
     Route::delete('/katatanya/{id}', [KataTanyaController::class, 'destroy'])->name('katatanya.destroy');
 });
 
-Route::get('/history', [App\Http\Controllers\HistoryController::class, 'history'])->name('history');
+Route::get('/history', [HistoryController::class, 'index'])->name('history');
+Route::delete('/history/{id}', [HistoryController::class, 'destroy'])->name('history.destroy');
+
+//informasi
+    Route::get('/informasi', [InformasiController::class, 'index'])->name('informasi'); // Menampilkan daftar alphabet
+
+    // Menyimpan data (POST)
+    Route::post('/informasi', [InformasiController::class, 'store'])->name('informasi.store');
+
+    // Mengupdate data (PUT/PATCH)
+    Route::put('/informasi/{id}', [InformasiController::class, 'update'])->name('informasi.update');
+
+    // Menghapus data (DELETE)
+    Route::delete('/informasi/{id}', [InformasiController::class, 'destroy'])->name('informasi.destroy');
