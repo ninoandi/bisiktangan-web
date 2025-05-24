@@ -187,16 +187,14 @@
               <div class="member-img">
                 <img src="assets/img/tim2.png" class="img-fluid" alt="">
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a href=""><i class="bi bi-tiktok"></i></a>
+                  <a href="https://www.instagram.com/amaliaputtrin?igsh=MW5id2p1cnVjOGx4ZQ=="><i class="bi bi-instagram"></i></a>
                 </div>
               </div>
               <div class="member-info">
                 <h4>Amalia Putri Nastiti</h4>
                 <span>Web Developer</span>
-                <p>Velit aut quia fugit et et. Dolorum ea voluptate vel tempore tenetur ipsa quae aut. Ipsum exercitationem iure minima enim corporis et voluptate.</p>
+                <p>"Setiap pagi adalah kesempatan baru untuk menjadi versi terbaik dari dirimu."</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -206,16 +204,14 @@
               <div class="member-img">
                 <img src="assets/img/tim1.png" class="img-fluid" alt="">
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a href=""><i class="bi bi-tiktok"></i></a>
+                  <a href="https://www.instagram.com/aadeliaptrri?igsh=ZnVhcHJqbjQ0enQz"><i class="bi bi-instagram"></i></a>
                 </div>
               </div>
               <div class="member-info">
                 <h4>Safina Adelia Putri</h4>
                 <span>UI/UX Designer</span>
-                <p>Quo esse repellendus quia id. Est eum et accusantium pariatur fugit nihil minima suscipit corporis. Voluptate sed quas reiciendis animi neque sapiente.</p>
+                <p>"Jangan bandingkan perjalananmu dengan orang lain. Setiap orang punya waktunya sendiri untuk bersinar."</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -225,16 +221,14 @@
               <div class="member-img">
                 <img src="assets/img/tim3.png" class="img-fluid" alt="">
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a href="https://www.tiktok.com/@aureccaa_?_t=ZS-8wc3e5Z04nI&_r=1"><i class="bi bi-tiktok"></i></a>
+                  <a href="https://www.instagram.com/beniqnoandi_20?igsh=MXAxanFmeDA2Y3I0bw=="><i class="bi bi-instagram"></i></a>
                 </div>
               </div>
               <div class="member-info">
                 <h4>Beniqno Andi Priambudi Kusuma</h4>
                 <span>Web Developer</span>
-                <p>Vero omnis enim consequatur. Voluptas consectetur unde qui molestiae deserunt. Voluptates enim aut architecto porro aspernatur molestiae modi.</p>
+                <p>"Hidup bukan tentang menunggu badai berlalu, tapi belajar menari di tengah hujan."</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -244,16 +238,14 @@
               <div class="member-img">
                 <img src="assets/img/tim4.png" class="img-fluid" alt="">
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
-                  <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
+                  <a href=""><i class="bi bi-tiktok"></i></a>
+                  <a href="https://www.instagram.com/bayu__j?igsh=dGs5eXRsd2tuY2R4"><i class="bi bi-instagram"></i></a>
                 </div>
               </div>
               <div class="member-info">
                 <h4>Bayu Johanda</h4>
                 <span>Mobile Developer</span>
-                <p>Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.</p>
+                <p>"Gagal itu wajar, yang tidak wajar adalah menyerah sebelum mencoba lagi"</p>
               </div>
             </div>
           </div><!-- End Team Member -->
@@ -263,16 +255,14 @@
               <div class="member-img">
                 <img src="assets/img/tim5.png" class="img-fluid" alt="">
                 <div class="social">
-                  <a href=""><i class="bi bi-twitter-x"></i></a>
-                  <a href=""><i class="bi bi-facebook"></i></a>
+                  <a href=""><i class="bi bi-tiktok"></i></a>
                   <a href=""><i class="bi bi-instagram"></i></a>
-                  <a href=""><i class="bi bi-linkedin"></i></a>
                 </div>
               </div>
               <div class="member-info">
                 <h4>Dicky Aries Setiawan</h4>
                 <span>Mobile Developer</span>
-                <p>Rerum voluptate non adipisci animi distinctio et deserunt amet voluptas. Quia aut aliquid doloremque ut possimus ipsum officia.</p>
+                <p>"Kamu tidak harus hebat untuk memulai, tapi kamu harus memulai untuk bisa menjadi hebat."</p>
               </div>
             </div>
           </div><!-- End Team Member -->
